@@ -8,9 +8,6 @@ class CaregiverSchema extends Schema {
     this.create('caregivers', (table) => {
       table.increments()
       table.string('name', 120).notNullable()
-      table.string('email').notNullable().unique()
-      table.string('password').notNullable()
-      table.string('login').notNullable().unique()
       table.string('gender').notNullable()
       table.string('document').notNullable().unique()
       table.timestamps()
