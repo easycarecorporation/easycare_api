@@ -6,11 +6,11 @@ const Model = use('Model')
 class Dose extends Model {
 
     doseDates() {
-        return this.hasMany('App/Models/DoseDate')
+        return this.belongsTo('App/Models/DoseDate')
     }
 
     doseTypes() {
-        return this.hasMany('App/Models/DoseType')
+        return this.belongsTo('App/Models/DoseType')
     }
 
     medicine() {
