@@ -1,5 +1,7 @@
 'use strict'
 
+const { route } = require('@adonisjs/framework/src/Route/Manager')
+
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
@@ -28,15 +30,29 @@ Route.resource('bracelets', 'BraceletController').validator(new Map([
 ])).middleware('auth')
 
 //patients
-Route.resource('patients', 'PatientController').validator(new Map([
-    [['patients.store'], ['Patient/StorePatient']],
-    [['patients.update'], ['Patient/UpdatePatient']],
-])).middleware('auth')
+Route.group(() => {
+    Route.resource('patients', 'PatientController').validator(new Map([
+        [['patients.store'], ['Patient/StorePatient']],
+        [['patients.update'], ['Patient/UpdatePatient']],
+    ])).middleware('auth')
+
+    Route.delete('patients/:id/allergies/:allergy', 'PatientController.destroyAllergy')
+    Route.delete('patients/:id/diseases/:disease', 'PatientController.destroyDisease')
+
+    Route.post('patients/:id/allergies/', 'PatientController.addAllergy')
+    Route.post('patients/:id/diseases/:disease', 'PatientController.addDisease')
+})
 
 //alergies
-Route.resource('alergies', 'AllergyController').validator(new Map([
+Route.resource('allergies', 'AllergyController').validator(new Map([
     [['alergies.store'], ['Allergy/StoreAllergy']],
     [['alergies.update'], ['Allergy/UpdateAllergy']],
+])).middleware('auth')
+
+//diseases
+Route.resource('diseases', 'DiseaseController').validator(new Map([
+    [['diseases.store'], ['Disease/StoreDisease']],
+    [['diseases.update'], ['Disease/UpdateDisease']],
 ])).middleware('auth')
 
 

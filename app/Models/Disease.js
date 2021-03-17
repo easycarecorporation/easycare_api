@@ -4,10 +4,6 @@
 const Model = use('Model')
 
 class Disease extends Model {
-
-    patient() {
-        this.belongsToMany('App/Models/Patient').pivotTable('disease_patients');
-    }
 }
 
 module.exports = Disease

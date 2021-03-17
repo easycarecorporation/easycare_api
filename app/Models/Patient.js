@@ -10,11 +10,15 @@ class Patient extends Model {
     }
 
     diseases() {
-        return this.belongsToMany('App/Models/Disease').pivotTable('disease_patients')
+        return this.belongsToMany('App/Models/Disease').pivotTable('disease_patients').withTimestamps()
     }
 
     allergies() {
-        return this.belongsToMany('App/Models/Allergy').pivotTable('allergy_patients')
+        return this.belongsToMany('App/Models/Allergy').pivotTable('allergy_patients').withTimestamps()
+    }
+
+    caregivers() {
+        return this.belongsToMany('App/Models/Caregiver').pivotTable('caregiver_patients').withTimestamps()
     }
 }
 
