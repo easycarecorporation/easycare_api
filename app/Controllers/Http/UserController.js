@@ -58,10 +58,6 @@ class UserController {
 
         const user = await User.findBy('username', params.username)
 
-        if(!user) {
-            user = 'do not exists.';
-        }
-
         return user;
     }
 }
