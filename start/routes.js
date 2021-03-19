@@ -18,7 +18,7 @@ Route.group(() => {
         [['users.destroy'], ['User/DestroyUser']]
     ]))
 
-    Route.get('users/validation/{:username}', 'UserController.alreadyExists')
+    Route.get('users/validation/:username', 'UserController.alreadyExists')
 });
 
 
