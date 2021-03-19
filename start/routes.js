@@ -11,11 +11,16 @@ Route.on('/').render('welcome')
 Route.post('auth', 'UserController.auth')
 
 //users
-Route.resource('users', 'UserController').validator(new Map([
-    [['users.store'], ['User/StoreUser']],
-    [['users.update'], ['User/UpdateUser']],
-    [['users.destroy'], ['User/DestroyUser']]
-]))
+Route.group(() => {
+    Route.resource('users', 'UserController').validator(new Map([
+        [['users.store'], ['User/StoreUser']],
+        [['users.update'], ['User/UpdateUser']],
+        [['users.destroy'], ['User/DestroyUser']]
+    ]))
+
+    Route.get('users/validation/{:username}', 'UserController.alreadyExists')
+});
+
 
 //caregivers
 Route.resource('caregivers', 'CaregiverController').validator(new Map([
