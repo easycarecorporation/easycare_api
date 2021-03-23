@@ -26,7 +26,7 @@ Route.group(() => {
 Route.resource('caregivers', 'CaregiverController').validator(new Map([
     [['caregivers.store'], ['Caregiver/StoreCaregiver']],
     [['caregivers.update'], ['Caregiver/UpdateCaregiver']],
-])).middleware('auth')
+]))
 
 //bracelets
 Route.resource('bracelets', 'BraceletController').validator(new Map([
