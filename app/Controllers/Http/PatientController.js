@@ -2,13 +2,61 @@
 
 const Patient = use('App/Models/Patient')
 
+const QueryBuilderService = use('App/Services/QueryBuilderService')
+
 class PatientController {
 
-    async index() {
-        
-        const patients = await Patient.all()
+    constructor() {
+      this.queryBuilderService = new QueryBuilderService();
+    }
 
-        return patients
+    async index({ request }) {
+
+        const query = request.get()
+
+        const name = this.queryBuilderService.getQuery('name', query.name)
+        const birthDate = this.queryBuilderService.getQuery('birthDate', query.birthDate)
+        const weight = this.queryBuilderService.getQuery('weight', query.weight)
+        const height = this.queryBuilderService.getQuery('height', query.height)
+        const bloodType = this.queryBuilderService.getQuery('bloodType', query.bloodType)
+        const photo = this.queryBuilderService.getQuery('photo', query.photo)
+        const zipCode = this.queryBuilderService.getQuery('zipCode', query.zipCode)
+        const street = this.queryBuilderService.getQuery('street', query.street)
+        const number = this.queryBuilderService.getQuery('number', query.number)
+        const complement = this.queryBuilderService.getQuery('complement', query.complement)
+        const district = this.queryBuilderService.getQuery('district', query.district)
+        const city = this.queryBuilderService.getQuery('city', query.city)
+        const state = this.queryBuilderService.getQuery('state', query.state)
+
+        const caregiverId = this.queryBuilderService.getQuery('caregiver_id', query.caregiverId)
+
+        const patients = await Patient.query()
+          .with('allergies')
+          .with('diseases')
+          .with('caregivers')
+          .whereRaw(name)
+          .whereRaw(birthDate)
+          .whereRaw(weight)
+          .whereRaw(height)
+          .whereRaw(bloodType)
+          .whereRaw(photo)
+          .whereRaw(zipCode)
+          .whereRaw(street)
+          .whereRaw(number)
+          .whereRaw(complement)
+          .whereRaw(district)
+          .whereRaw(city)
+          .whereRaw(state)
+          .innerJoin('caregiver_patients', 'caregiver_patients.patient_id', 'patients.id')
+          .innerJoin('caregivers', 'caregiver_patients.caregiver_id', 'caregivers.id')
+          .whereRaw(caregiverId).fetch()
+
+          // if(caregiverId) {
+          //     patients
+
+          // }
+
+        return await patients;
     }
 
     async show({ params }) {
