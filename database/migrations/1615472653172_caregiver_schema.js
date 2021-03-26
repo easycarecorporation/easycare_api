@@ -10,6 +10,8 @@ class CaregiverSchema extends Schema {
       table.string('name', 120).notNullable()
       table.string('gender').notNullable()
       table.string('document').notNullable().unique()
+      table.string('phone_number').notNullable()
+      table.string('photo')
       table.timestamps()
     })
   }

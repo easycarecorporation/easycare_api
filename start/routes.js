@@ -23,10 +23,13 @@ Route.group(() => {
 
 
 //caregivers
-Route.resource('caregivers', 'CaregiverController').validator(new Map([
-    [['caregivers.store'], ['Caregiver/StoreCaregiver']],
-    [['caregivers.update'], ['Caregiver/UpdateCaregiver']],
-]))
+Route.group(() => {
+  Route.resource('caregivers', 'CaregiverController').validator(new Map([
+      [['caregivers.store'], ['Caregiver/StoreCaregiver']],
+      [['caregivers.update'], ['Caregiver/UpdateCaregiver']],
+  ]))
+  Route.patch('caregivers/:id/images', 'CaregiverController.insertImage')
+})
 
 //bracelets
 Route.resource('bracelets', 'BraceletController').validator(new Map([
@@ -41,6 +44,7 @@ Route.group(() => {
         [['patients.update'], ['Patient/UpdatePatient']],
     ])).middleware('auth')
 
+    Route.patch('patients/:id/images', 'PatientController.insertImage')
     Route.delete('patients/:id/allergies/:allergy', 'PatientController.destroyAllergy')
     Route.delete('patients/:id/diseases/:disease', 'PatientController.destroyDisease')
 

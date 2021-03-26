@@ -5,13 +5,13 @@ class StoreCaregiver {
   async fails(errorMessages) {
     return this.ctx.response.status(422).json(errorMessages);
   }
-  
+
   get rules () {
     return {
       name: 'required',
       gender: 'required',
       document: 'required:unique:caregivers',
-      userId: 'required'
+      'user_id': 'required'
     }
   }
 
@@ -21,7 +21,7 @@ class StoreCaregiver {
       'gender.required': 'O gênero deve ser informado',
       'document.required': 'O documento deve ser informado',
       'document.unique': 'O documento já foi cadastrado',
-      'userId.required': 'O usuário deve ser informado'
+      'user_id.required': 'O usuário deve ser informado'
     }
   }
 }

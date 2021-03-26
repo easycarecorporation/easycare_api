@@ -2,7 +2,13 @@
 
 const Caregiver = use('App/Models/Caregiver')
 
+const CloudinaryStorageService = use('App/Services/CloudinaryStorageService')
+
 class CaregiverController {
+
+    constructor() {
+        this.cloudinaryStorageService = new CloudinaryStorageService()
+    }
 
     async index({ request, response }) {
 
@@ -14,18 +20,31 @@ class CaregiverController {
     async show({ params, request, response }) {
 
         const caregiver = await Caregiver.find(params.id)
-        
+
         return caregiver
     }
 
     async store({ request, response }) {
 
-        const data = request.only(['name', 'gender', 'document'])
+        const data = request.all()
 
         const caregiver = await Caregiver.create(data)
 
         return caregiver
     }
+
+    async insertImage( { params, request }) {
+
+        const caregiver = await Caregiver.find(params.id);
+
+        const uploadedImage = await this.cloudinaryStorageService.upload(request.file('image'));
+
+        caregiver.photo = uploadedImage;
+
+        caregiver.save()
+
+        return caregiver;
+  }
 
     async update({ params, request, response }) {
 
@@ -36,7 +55,7 @@ class CaregiverController {
         caregiver.merge(data)
         await caregiver.save()
 
-        return caregiver 
+        return caregiver
     }
 
     async destroy({ params, request, response }) {

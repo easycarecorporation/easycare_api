@@ -4,10 +4,13 @@ const Patient = use('App/Models/Patient')
 
 const QueryBuilderService = use('App/Services/QueryBuilderService')
 
+const CloudinaryStorageService = use('App/Services/CloudinaryStorageService')
+
 class PatientController {
 
     constructor() {
-      this.queryBuilderService = new QueryBuilderService();
+        this.queryBuilderService = new QueryBuilderService()
+        this.cloudinaryStorageService = new CloudinaryStorageService()
     }
 
     async index({ request }) {
@@ -51,11 +54,6 @@ class PatientController {
           .innerJoin('caregivers', 'caregiver_patients.caregiver_id', 'caregivers.id')
           .whereRaw(caregiverId).fetch()
 
-          // if(caregiverId) {
-          //     patients
-
-          // }
-
         return await patients;
     }
 
@@ -67,7 +65,7 @@ class PatientController {
     }
 
     async store({ request }) {
-       
+
         const data = request.only([
             'name',
             'birth_date',
@@ -85,14 +83,14 @@ class PatientController {
             'bracelet_id'
         ])
 
-        const { 
-            caregiver_id, 
-            allergies_ids, 
-            diseases_ids  
+        const {
+            caregiver_id,
+            allergies_ids,
+            diseases_ids
         } = request.only(['caregiver_id', 'allergies_ids', 'diseases_ids'])
 
         const patient = await Patient.create(data)
-        
+
         await patient.caregivers().attach([caregiver_id])
         await patient.allergies().attach(allergies_ids)
         await patient.diseases().attach(diseases_ids)
@@ -100,8 +98,21 @@ class PatientController {
         return patient
     }
 
+    async insertImage( { params, request }) {
+
+        const patient = await Patient.find(params.id);
+
+        const uploadedImage = await this.cloudinaryStorageService.upload(request.file('image'));
+
+        patient.photo = uploadedImage;
+
+        patient.save()
+
+        return patient;
+    }
+
     async update({ params, request }) {
-        
+
         const data = request.all()
 
         const patient = await Patient.find(params.id)
