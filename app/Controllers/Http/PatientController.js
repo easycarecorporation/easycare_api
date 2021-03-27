@@ -102,7 +102,7 @@ class PatientController {
 
         const patient = await Patient.find(params.id);
 
-        const uploadedImage = await this.cloudinaryStorageService.upload(request.only(['image_url']));
+        const uploadedImage = await this.cloudinaryStorageService.upload(request.file('image'));
 
         patient.photo = uploadedImage;
 
