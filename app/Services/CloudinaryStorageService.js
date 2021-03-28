@@ -15,7 +15,7 @@ class CloudinaryStorageService {
 
         let url = '';
 
-        await cloudinary.uploader.upload(file.tmpPath).then( image => {
+        await cloudinary.uploader.upload(file.uri).then( image => {
             url = image.url;
         });
 
