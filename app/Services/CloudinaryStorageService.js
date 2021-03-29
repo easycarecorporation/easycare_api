@@ -5,7 +5,7 @@ const cloudinary = require('cloudinary').v2
 
 class CloudinaryStorageService {
 
-    async upload(file) {
+    async upload(photo) {
 
         cloudinary.config({
             cloud_name: Env.get("CLOUDINARY_CLOUD_NAME"),
@@ -15,7 +15,7 @@ class CloudinaryStorageService {
 
         let url = '';
 
-        await cloudinary.uploader.upload(file.uri).then( image => {
+        await cloudinary.uploader.upload(photo).then( image => {
             url = image.url;
         });
 

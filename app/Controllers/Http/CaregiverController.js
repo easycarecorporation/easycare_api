@@ -30,21 +30,29 @@ class CaregiverController {
 
         const caregiver = await Caregiver.create(data)
 
+        const uploadedImage = await this.cloudinaryStorageService.upload(data.photo)
+
+        data.photo = uploadedImage
+        return data;
+
+        await caregiver.save()
+
         return caregiver
     }
 
-    async insertImage( { params, request }) {
+  //   async insertImage( { params, request }) {
 
-        const caregiver = await Caregiver.find(params.id);
+  //       const caregiver = await Caregiver.find(params.id);
 
-        const uploadedImage = await this.cloudinaryStorageService.upload(request.file('image'));
+  //       console.log(request.file('file'))
+  //       const uploadedImage = await this.cloudinaryStorageService.upload(request.file('file'));
 
-        caregiver.photo = uploadedImage;
+  //       caregiver.photo = uploadedImage;
 
-        caregiver.save()
+  //       caregiver.save()
 
-        return caregiver;
-  }
+  //       return caregiver;
+  // }
 
     async update({ params, request, response }) {
 

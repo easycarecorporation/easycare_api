@@ -11,7 +11,7 @@ class StoreCaregiver {
       name: 'required',
       gender: 'required',
       document: 'required:unique:caregivers',
-      'user_id': 'required'
+      user_id: 'required'
     }
   }
 
