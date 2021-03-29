@@ -38,11 +38,12 @@ class CaregiverController {
         const caregiver = await Caregiver.find(params.id);
 
         const data = request.all();
+
         const uploadedImage = await this.cloudinaryStorageService.upload(data.photo);
 
-        // caregiver.photo = uploadedImage ? uploadedImage : 'failed to upload.';
+        caregiver.photo = uploadedImage ? uploadedImage : 'failed to upload.';
 
-        // caregiver.save()
+        caregiver.save()
 
         return caregiver;
 
