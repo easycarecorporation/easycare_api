@@ -17,7 +17,7 @@ class CloudinaryStorageService {
 
         await cloudinary.uploader.upload(photo).then( image => {
             url = image.url;
-        });
+        }).catch(err => { return err });
 
         return url;
     }
