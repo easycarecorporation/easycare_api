@@ -41,7 +41,7 @@ class CaregiverController {
 
         const uploadedImage = await this.cloudinaryStorageService.upload(data.photo);
 
-        caregiver.photo = uploadedImage ? uploadedImage : 'failed to upload.';
+        caregiver.photo = uploadedImage;
 
         caregiver.save()
 
