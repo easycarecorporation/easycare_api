@@ -98,19 +98,6 @@ class PatientController {
         return patient
     }
 
-    async insertImage( { params, request }) {
-
-        const patient = await Patient.find(params.id);
-
-        const uploadedImage = await this.cloudinaryStorageService.upload(request.file('image'));
-
-        patient.photo = uploadedImage;
-
-        patient.save()
-
-        return patient;
-    }
-
     async update({ params, request }) {
 
         const data = request.all()

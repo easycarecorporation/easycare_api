@@ -33,22 +33,6 @@ class CaregiverController {
         return caregiver
     }
 
-    async insertImage( { params, request }) {
-
-        const caregiver = await Caregiver.find(params.id);
-
-        const data = request.all();
-
-        const uploadedImage = await this.cloudinaryStorageService.upload(data.photo);
-
-        caregiver.photo = uploadedImage;
-
-        caregiver.save()
-
-        return caregiver;
-
-  }
-
     async update({ params, request, response }) {
 
         const data = request.all()
