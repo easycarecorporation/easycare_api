@@ -4,8 +4,6 @@ const Patient = use('App/Models/Patient')
 
 const QueryBuilderService = use('App/Services/QueryBuilderService')
 
-const CloudinaryStorageService = use('App/Services/CloudinaryStorageService')
-
 class PatientController {
 
     constructor() {

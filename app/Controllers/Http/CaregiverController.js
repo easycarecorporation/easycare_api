@@ -2,8 +2,6 @@
 
 const Caregiver = use('App/Models/Caregiver')
 
-const CloudinaryStorageService = use('App/Services/CloudinaryStorageService')
-
 class CaregiverController {
 
     constructor() {
