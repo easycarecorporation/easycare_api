@@ -4,10 +4,6 @@ const Caregiver = use('App/Models/Caregiver')
 
 class CaregiverController {
 
-    constructor() {
-        this.cloudinaryStorageService = new CloudinaryStorageService()
-    }
-
     async index({ request, response }) {
 
         const caregiver = await Caregiver.all()

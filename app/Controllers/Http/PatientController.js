@@ -8,7 +8,6 @@ class PatientController {
 
     constructor() {
         this.queryBuilderService = new QueryBuilderService()
-        this.cloudinaryStorageService = new CloudinaryStorageService()
     }
 
     async index({ request }) {
