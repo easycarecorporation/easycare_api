@@ -3,12 +3,12 @@
 const User = use('App/Models/User')
 
 class UserController {
-    
+
     async auth({ request, auth }) {
         const { email, password } = request.all()
 
         const token = await auth.attempt(email, password)
-    
+
         return token;
     }
 
@@ -19,7 +19,7 @@ class UserController {
         return users;
     }
 
-    
+
     async show({ params }) {
         const user = await User.find(params.id)
 
@@ -50,16 +50,34 @@ class UserController {
         const user = await User.find(params.id)
 
         user.delete()
-        
+
         return user
     }
 
-    async alreadyExists({ params }) {
+    async usernameAlreadyExists({ params }) {
 
         const user = await User.findBy('username', params.username)
 
-        return user;
+        if(user) {
+
+            return { exists: true }
+        }
+
+        return { exists: false }
     }
+
+    async emailAlreadyExists({ params }) {
+
+        const user = await User.findBy('email', params.email)
+
+        if(user) {
+
+            return { exists: true }
+        }
+
+        return { exists: false }
+    }
+
 }
 
 module.exports = UserController

@@ -4,21 +4,33 @@ const Caregiver = use('App/Models/Caregiver')
 
 class CaregiverController {
 
-    async index({ request, response }) {
+    async index() {
 
         const caregiver = await Caregiver.all()
 
         return caregiver
     }
 
-    async show({ params, request, response }) {
+    async show({ params }) {
 
         const caregiver = await Caregiver.find(params.id)
 
         return caregiver
     }
 
-    async store({ request, response }) {
+    async documentAlreadyExists({ params }) {
+
+        const caregiver = await Caregiver.findBy('document', params.document)
+
+        if(caregiver) {
+
+            return { exists: true }
+        }
+
+        return { exists: false }
+    }
+
+    async store({ request }) {
 
         const data = request.all()
 
@@ -27,7 +39,7 @@ class CaregiverController {
         return caregiver
     }
 
-    async update({ params, request, response }) {
+    async update({ params, request }) {
 
         const data = request.all()
 
@@ -39,7 +51,7 @@ class CaregiverController {
         return caregiver
     }
 
-    async destroy({ params, request, response }) {
+    async destroy({ params }) {
 
         const caregiver = await Caregiver.find(params.id)
 

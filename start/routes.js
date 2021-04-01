@@ -1,7 +1,5 @@
 'use strict'
 
-const { route } = require('@adonisjs/framework/src/Route/Manager')
-
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
@@ -18,15 +16,21 @@ Route.group(() => {
         [['users.destroy'], ['User/DestroyUser']]
     ]))
 
-    Route.get('users/validation/:username', 'UserController.alreadyExists')
+    Route.get('users/validation/username/:username', 'UserController.usernameAlreadyExists')
+    Route.get('users/validation/email/:email', 'UserController.emailAlreadyExists')
 })
 
 
 //caregivers
-Route.resource('caregivers', 'CaregiverController').validator(new Map([
-    [['caregivers.store'], ['Caregiver/StoreCaregiver']],
-    [['caregivers.update'], ['Caregiver/UpdateCaregiver']],
-]))
+Route.group(() => {
+  Route.resource('caregivers', 'CaregiverController').validator(new Map([
+      [['caregivers.store'], ['Caregiver/StoreCaregiver']],
+      [['caregivers.update'], ['Caregiver/UpdateCaregiver']],
+  ]))
+
+  Route.get('caregivers/validation/:document', 'CaregiverController.documentAlreadyExists')
+})
+
 
 //bracelets
 Route.resource('bracelets', 'BraceletController').validator(new Map([

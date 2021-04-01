@@ -5,21 +5,21 @@ const Bracelet = use('App/Models/Bracelet')
 class BraceletController {
 
     async index() {
-        
+
         const bracelets = await Bracelet.all()
 
         return bracelets
     }
 
-    async show({ params, request, response }) {
-        
+    async show({ params }) {
+
         const bracelet = await Bracelet.find(params.id)
 
         return bracelet
     }
 
-    async store({ request, response }) {
-       
+    async store({ request }) {
+
         const data = request.only('model')
 
         const bracelet = await Bracelet.create(data)
@@ -27,8 +27,8 @@ class BraceletController {
         return bracelet
     }
 
-    async update({ params, request, response }) {
-        
+    async update({ params, request, }) {
+
         const data = request.all()
 
         const bracelet = await Bracelet.find(params.id)
@@ -40,7 +40,7 @@ class BraceletController {
         return bracelet
     }
 
-    async destroy({ params, request, respons }) {
+    async destroy({ params }) {
 
         const bracelet = await Bracelet.find(params.id)
 

@@ -5,21 +5,21 @@ const Disease = use('App/Models/Disease')
 class DiseaseController {
 
     async index() {
-        
+
         const diseases = await Disease.all()
 
         return diseases
     }
 
-    async show({ params, request, response }) {
-        
+    async show({ params }) {
+
         const disease = await Disease.find(params.id)
 
         return disease
     }
 
-    async store({ request, response }) {
-       
+    async store({ request }) {
+
         const data = request.all()
 
         const disease = await Disease.create(data)
@@ -27,8 +27,8 @@ class DiseaseController {
         return disease
     }
 
-    async update({ params, request, response }) {
-        
+    async update({ params, request }) {
+
         const data = request.all()
 
         const disease = await Disease.find(params.id)
@@ -39,12 +39,12 @@ class DiseaseController {
         return disease
     }
 
-    async destroy({ params, request, respons }) {
+    async destroy({ params }) {
 
         const disease = await Disease.find(params.id)
 
         disease.delete()
-        
+
         return disease
     }
 }
