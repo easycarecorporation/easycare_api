@@ -64,6 +64,7 @@ Route.resource('diseases', 'DiseaseController').validator(new Map([
     [['diseases.update'], ['Disease/UpdateDisease']],
 ])).middleware('auth')
 
-
+//tokens
+Route.resource('tokens', 'TokenController')
 
 

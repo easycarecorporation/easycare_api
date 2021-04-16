@@ -1,6 +1,7 @@
 'use strict'
 
 const User = use('App/Models/User')
+const FirebaseAdminService = use('App/Services/FirebaseAdminService')
 
 class UserController {
 
@@ -14,6 +15,7 @@ class UserController {
 
     async index() {
 
+        const firebaseAdminService = new FirebaseAdminService();
         const users = await User.all();
 
         return users;
