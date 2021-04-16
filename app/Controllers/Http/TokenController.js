@@ -41,9 +41,17 @@ class TokenController {
     async store({ request }) {
         const data = request.all();
 
-        const token = await Token.create(data);
+        const alreadyExists = await Token.findBy('token', data.token);
 
-        return token;
+        if (alreadyExists) {
+
+            return { exists: true };
+        } else {
+
+            const token = await Token.create(data);
+
+            return token;
+        }
     }
 
     async update({ params, request }) {
